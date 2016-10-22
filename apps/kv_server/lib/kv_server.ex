@@ -8,6 +8,8 @@ defmodule KVServer do
     children = [
       # worker(module, args, options \\ [])
       worker(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
+      # Task.start_link(KVServer, :accept, port) will be called and the
+      # worker spec id in the supervisor is Task
       worker(Task, [KVServer,
                     :accept,
                     [Application.fetch_env!(:kv_server, :port)]])
